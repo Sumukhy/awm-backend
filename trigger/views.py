@@ -14,9 +14,8 @@ import json
 latitude = 10
 longitude = 10
 
-cred = credentials.Certificate("C:/Users/SUMUKH_YR/Desktop/amw-firebase-firebase-adminsdk-x47ac-a650a4438a.json")
+cred = credentials.Certificate("trigger/amw-firebase-firebase-adminsdk-x47ac-a650a4438a.json")
 firebase_admin.initialize_app(cred)
-    
 
 
 def calc_dist(lat1, lon1):
