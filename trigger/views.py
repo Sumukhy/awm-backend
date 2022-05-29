@@ -18,7 +18,7 @@ longitude = 10
 directory = os.getcwd()
 
 print(directory)
-cred = credentials.Certificate("trigger/amw-firebase-firebase-adminsdk-x47ac-a650a4438a.json")
+cred = credentials.Certificate("awm-backend/trigger/amw-firebase-firebase-adminsdk-x47ac-a650a4438a.json")
 firebase_admin.initialize_app(cred)
 
 
