@@ -18,7 +18,7 @@ longitude = 10
 directory = os.getcwd()
 
 print(directory)
-cred = credentials.Certificate("awm-backend/trigger/amw-firebase-firebase-adminsdk-x47ac-a650a4438a.json")
+cred = credentials.Certificate("trigger/amw-firebase-firebase-adminsdk-x47ac-a650a4438a.json")
 firebase_admin.initialize_app(cred)
 
 
@@ -28,8 +28,8 @@ def calc_dist(lat1, lon1):
     return geopy.distance.distance(loc1, loc2).km
 
 def sendNotification(uid):
-    message = messaging.Message(notification=messaging.Notification(title = 'Acc within 1Km please help me',
-                                                                    body = "Please help me" ), 
+    message = messaging.Message(notification=messaging.Notification(title = 'Accident detected! 🚨',
+                                                                    body = "YOLO! Time waits for none but you can make it worth for someone by saving them immediately" ), 
                                 topic=uid,
                                 data = {'lat': str(latitude), 'long' : str(longitude)})
     response = messaging.send(message)
@@ -61,4 +61,27 @@ def notificationTrigger(request):
     latitude = float(lat)
     longitude = float(lon)
     trigger()
+    return Response({"status": "success"})
+
+@csrf_exempt
+@api_view(["GET"])
+@permission_classes((AllowAny,))
+def hospitalNotificationTrigger(request):
+    global latitude, longitude
+    bloodGrpup = request.GET.get('bloodgroup')
+
+    lat = request.GET.get('lat')
+    lon = request.GET.get('long')
+    latitude = float(lat)
+    longitude = float(lon)
+    # db = firestore.client()
+    # user_list = db.collection('users').get()
+    
+    # for user in user_list:
+    #     print(user.id)
+    message = messaging.Message(notification=messaging.Notification(title = 'Blood req',
+                                                                body = "Please help me"), 
+                            topic='all',
+                            data = {'lat': str(latitude), 'long' : str(longitude),'bloodgroup':bloodGrpup})
+    response = messaging.send(message)
     return Response({"status": "success"})
