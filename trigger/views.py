@@ -74,13 +74,8 @@ def hospitalNotificationTrigger(request):
     lon = request.GET.get('long')
     latitude = float(lat)
     longitude = float(lon)
-    # db = firestore.client()
-    # user_list = db.collection('users').get()
-    
-    # for user in user_list:
-    #     print(user.id)
-    message = messaging.Message(notification=messaging.Notification(title = 'Blood req',
-                                                                body = "Please help me"), 
+    message = messaging.Message(notification=messaging.Notification(title = f'Urgent Requirement of Blood Group {bloodGrpup}',
+                                                                body = f"A life may depend on a gesture from you, an urgent necessity of ( blood group({bloodGrpup}) ) blood is needed. Please reach to the following location ASAP!!"), 
                             topic='all',
                             data = {'lat': str(latitude), 'long' : str(longitude),'bloodgroup':bloodGrpup})
     response = messaging.send(message)
